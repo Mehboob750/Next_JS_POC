@@ -1,7 +1,15 @@
 .container {
   padding: 0 2rem;
 }
-
+.buttonContainer{
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+.heading{
+  display: flex;
+  justify-content: center;
+}
 .main {
   min-height: 100vh;
   padding: 4rem 0;
