@@ -22,11 +22,8 @@ export default function Home() {
       <h1 className={styles.title}>
         Home Page
       </h1>
-      <Container>
-      <Link href='/ex1' prefetch={true}>Prefetch True</Link>
-      <br/>
-      <Link href='/ex2' prefetch={false}>Prefetch False</Link>
-      </Container>
+      {/* <iframe width="560" height="315" src="https://www.youtube.com/embed/oeFXbtkyRnE?autoplay=1" allow="autoplay" frameBorder={"0"}
+        allowFullScreen={true}></iframe> */}
     </>
   )
 }

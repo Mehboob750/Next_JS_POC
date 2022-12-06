@@ -7,34 +7,43 @@ export default Form;
 function Form() {
     // form validation rules 
     const validationSchema = Yup.object().shape({
-        image: Yup
-        .mixed()
-        .required("You need to provide a file"),
-        title: Yup.string()
-            .required('Title is required'),
-        firstName: Yup.string()
-            .required('First Name is required'),
-        lastName: Yup.string()
-            .required('Last name is required'),
-        dob: Yup.string()
-            .required('Date of Birth is required')
-            .matches(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/, 'Date of Birth must be a valid date in the format YYYY-MM-DD'),
-        email: Yup.string()
-            .required('Email is required')
-            .email('Email is invalid'),
-        password: Yup.string()
-            .required('Password is required')
-            .min(8, 'Password must be at least 8 characters'),
-        confirmPassword: Yup.string()
-            .oneOf([Yup.ref('password'), null], 'Passwords must match')
-            .required('Confirm Password is required'),
-        acceptTermsandConditions: Yup.bool()
-            .oneOf([true], 'You must accept our terms & conditions')
+        file: Yup.mixed().nullable().required('File required')
+        // .test("required", "You need to provide a file", (file) => {
+        //     // return file && file.size <-- u can use this if you don't want to allow empty files to be uploaded;
+        //     // if (file) 
+        //     return true;
+        //     // return false;
+        // })
+        .test("fileSize", "The file is too large", (file) => {
+            //if u want to allow only certain file sizes
+            return file && file.size <= 2000000;
+        })
+        ,
+        // title: Yup.string()
+        //     .required('Title is required'),
+        // firstName: Yup.string()
+        //     .required('First Name is required'),
+        // lastName: Yup.string()
+        //     .required('Last name is required'),
+        // dob: Yup.string()
+        //     .required('Date of Birth is required')
+        //     .matches(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/, 'Date of Birth must be a valid date in the format YYYY-MM-DD'),
+        // email: Yup.string()
+        //     .required('Email is required')
+        //     .email('Email is invalid'),
+        // password: Yup.string()
+        //     .required('Password is required')
+        //     .min(8, 'Password must be at least 8 characters'),
+        // confirmPassword: Yup.string()
+        //     .oneOf([Yup.ref('password'), null], 'Passwords must match')
+        //     .required('Confirm Password is required'),
+        // acceptTermsandConditions: Yup.bool()
+        //     .oneOf([true], 'You must accept our terms & conditions')
     });
     const formOptions = { resolver: yupResolver(validationSchema) };
 
     // get functions to build form with useForm() hook
-    const { register, handleSubmit, reset, formState } = useForm(formOptions);
+    const { register, handleSubmit, reset, formState, setValue } = useForm(formOptions);
     console.log('register==>',register)
     console.log('handleSubmit==>',handleSubmit)
     console.log('reset==>',reset)
@@ -47,6 +56,14 @@ function Form() {
         return false;
     }
 
+    const handleChange=(e)=>{
+        console.log('E',e,e.target.files[0])
+        setValue('file',e.target.files[0])
+    }
+    function handleLoad(){
+        console.log('Load')
+        setValue('file',null)
+    }
     return (
         <div className={styles.form}>
         <div className={styles.formContainer}>
@@ -55,8 +72,8 @@ function Form() {
                     <div>
                         <div>
                             <lable>Image</lable>
-                            <input name="image" type="file" accept=".jpg,.jpeg,.png" {...register('image')} />
-                            <div className={styles.invalidFeedback}>{errors.image?.message}</div>
+                            <input name="file" type="file" accept=".jpg,.jpeg,.png" {...register('file')} onLoad={()=>handleLoad()} onChange={(e)=>handleChange(e)} />
+                            <div className={styles.invalidFeedback}>{errors.file?.message}</div>
                             <label>Title</label>
                             <select {...register('title')}>
                                 <option value=""></option>

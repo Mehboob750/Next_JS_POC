@@ -1,0 +1,13 @@
+.audioContainer{
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 150px;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+}
+.speedlist{
+    margin-left: 20px;
+}

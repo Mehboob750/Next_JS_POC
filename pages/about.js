@@ -5,6 +5,8 @@ const About = () => {
     console.log('router===>',router)
     return ( 
         <>
+        <div>Route query data</div>
+        <div>{`Name => ${router.query.name} Id => ${router.query.id}`}</div>
         <h1>router.push vs router.replace</h1>
         <button onClick={()=>router.push('/')}>home</button>
         <p>router.push = home--about--demo/d1 = back click = home--about</p>
